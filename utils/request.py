@@ -25,6 +25,10 @@ class APIRequest:
         response = requests.delete(url)
         return self.__get_response(response)
 
+    def put(self, url, payload, headers):
+        response = requests.put(url, data=payload, headers=headers)
+        return self.__get_response(response)
+
     def __get_response(self, response):
         status_code = response.status_code
         text = response.text

@@ -1,4 +1,5 @@
 import requests
+from assertpy import soft_assertions
 
 from api_clinet.people_api_client import PeopleApiClient
 from tests.assertions.people_api_asserts import *
@@ -38,5 +39,22 @@ def test_user_deleted():
     response = client.delete_user(user_id)
     assert_that(response.status_code, description="User not deleted").is_equal_to(requests.codes.ok)
 
-    get_deleted_user = client.read_user_by_id(user_id)
-    assert_that(get_deleted_user.status_code, description='User found').is_equal_to(requests.codes.not_found)
+    deleted_user = client.read_user_by_id(user_id)
+    assert_that(deleted_user.status_code, description='User found').is_equal_to(requests.codes.not_found)
+
+
+def test_user_updated():
+    last_name, _ = client.create_user()
+    users = client.read_all_users().as_dict
+    user_id = search_user_created_in(users, last_name)['person_id']
+
+    new_first_name = f'First{generate_unique_name()}'
+    new_last_name = f'Last{generate_unique_name()}'
+    response = client.update_user(user_id, new_first_name, new_last_name)
+    assert_that(response.status_code, description='User not updated').is_equal_to(requests.codes.ok)
+
+    updated_user = client.read_user_by_id(user_id)
+
+    with soft_assertions():
+        assert_that(updated_user.as_dict['fname'], description='First Name not updated').is_equal_to(new_first_name)
+        assert_that(updated_user.as_dict['lname'], description='Last Name not updated').is_equal_to(new_last_name)
