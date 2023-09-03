@@ -33,8 +33,12 @@ class PeopleApiClient(BaseApiClient):
         return last_name, response
 
     def delete_user(self, user_id):
-        url = f'{BASE_URI}/user_id'
+        url = f'{BASE_URI}/{user_id}'
         return self.request.delete(url)
 
     def read_all_users(self):
         return self.request.get(self.base_url)
+
+    def read_user_by_id(self, user_id):
+        url = f'{BASE_URI}/{user_id}'
+        return self.request.get(url)

@@ -8,7 +8,8 @@ client = PeopleApiClient()
 
 
 def test_user_created_with_a_json_template(create_data):
-    client.create_user(create_data)
+    _, response = client.create_user(create_data)
+    assert_that(response.status_code, description='User not created').is_equal_to(requests.codes.no_content)
 
     response = client.read_all_users()
     users = response.as_dict
@@ -26,3 +27,16 @@ def test_user_created():
     users = client.read_all_users().as_dict
     is_new_user_created = search_user_created_in(users, last_name)
     assert_user_is_present(is_new_user_created)
+
+
+def test_user_deleted():
+    last_name, _ = client.create_user()
+
+    users = client.read_all_users().as_dict
+    user_id = search_user_created_in(users, last_name)['person_id']
+
+    response = client.delete_user(user_id)
+    assert_that(response.status_code, description="User not deleted").is_equal_to(requests.codes.ok)
+
+    get_deleted_user = client.read_user_by_id(user_id)
+    assert_that(get_deleted_user.status_code, description='User found').is_equal_to(requests.codes.not_found)
