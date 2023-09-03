@@ -1,1 +1,1 @@
-BASE_URI = 'http://0.0.0.0:5000/api/people'
+BASE_URI = 'http://192.168.86.148:5000/api/people'

@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-BASE_PATH = Path.cwd().joinpath('..', 'tets', 'data')
+BASE_PATH = Path.cwd().joinpath('..', 'tests', 'data')
 
 
 def read_json_file(file_name):
