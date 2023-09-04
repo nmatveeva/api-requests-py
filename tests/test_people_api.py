@@ -9,6 +9,9 @@ client = PeopleApiClient()
 
 
 def test_user_created_with_a_json_template(create_data):
+    """
+    Test the People API can be used to create a new user via JSON file
+    """
     _, response = client.create_user(create_data)
     assert_that(response.status_code, description='User not created').is_equal_to(requests.codes.no_content)
 
@@ -22,6 +25,9 @@ def test_user_created_with_a_json_template(create_data):
 
 
 def test_user_created():
+    """
+    Test the People API can be used to create a new user
+    """
     last_name, response = client.create_user()
     assert_that(response.status_code, description='User not created').is_equal_to(requests.codes.no_content)
 
@@ -31,6 +37,9 @@ def test_user_created():
 
 
 def test_user_deleted():
+    """
+    Test the People API can be used to delete a user
+    """
     last_name, _ = client.create_user()
 
     users = client.read_all_users().as_dict
@@ -44,6 +53,9 @@ def test_user_deleted():
 
 
 def test_user_updated():
+    """
+    Test the People API can be used to update a user
+    """
     last_name, _ = client.create_user()
     users = client.read_all_users().as_dict
     user_id = search_user_created_in(users, last_name)['person_id']

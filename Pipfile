@@ -10,6 +10,8 @@ assertpy = "*"
 lxml = "*"
 jsonpath-ng = "*"
 cerberus = "*"
+reportportal-client = "*"
+pytest-reportportal = "*"
 
 [dev-packages]
 
