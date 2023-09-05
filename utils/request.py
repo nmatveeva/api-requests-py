@@ -1,14 +1,16 @@
 from dataclasses import dataclass
 
 import requests
+from lxml import etree
 
 
 @dataclass
 class Response:
     status_code: int
-    test: str
+    text: str
     as_dict: object
     headers: dict
+    xml_tree: object
 
 
 class APIRequest:
@@ -38,8 +40,13 @@ class APIRequest:
         except Exception:
             as_dict = {}
 
+        try:
+            xml_tree = etree.fromstring(bytes(text, encoding='utf8'))
+        except Exception:
+            xml_tree = ''
+
         headers = response.headers
 
         return Response(
-            status_code, text, as_dict, headers
+            status_code, text, as_dict, headers, xml_tree
         )
