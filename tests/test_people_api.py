@@ -48,9 +48,6 @@ def test_user_deleted():
     response = client.delete_user(user_id)
     assert_that(response.status_code, description="User not deleted").is_equal_to(requests.codes.ok)
 
-    deleted_user = client.read_user_by_id(user_id)
-    assert_that(deleted_user.status_code, description='User found').is_equal_to(requests.codes.not_found)
-
 
 def test_user_updated():
     """

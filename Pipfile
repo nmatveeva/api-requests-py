@@ -12,6 +12,7 @@ jsonpath-ng = "*"
 cerberus = "*"
 reportportal-client = "*"
 pytest-reportportal = "*"
+pytest-xdist = "*"
 
 [dev-packages]
 
