@@ -1,7 +1,7 @@
 from assertpy import assert_that
 from lxml import etree
 
-from api_clinet.covid_soap_client import CovidSoapClient
+from clients.soap_client.covid_soap_client import CovidSoapClient
 from tests.helpers.covid_soap_helpers import get_overal_cases
 
 client = CovidSoapClient()
