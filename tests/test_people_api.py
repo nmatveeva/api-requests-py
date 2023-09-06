@@ -1,7 +1,8 @@
 import requests
 from assertpy import soft_assertions
+from cerberus import Validator
 
-from api_clinet.people_api_client import PeopleApiClient
+from clients.rest_api_clinet.people_api_client import PeopleApiClient, schema
 from tests.assertions.people_api_asserts import *
 from tests.helpers.people_api_helpers import *
 
@@ -67,3 +68,16 @@ def test_user_updated():
     with soft_assertions():
         assert_that(updated_user.as_dict['fname'], description='First Name not updated').is_equal_to(new_first_name)
         assert_that(updated_user.as_dict['lname'], description='Last Name not updated').is_equal_to(new_last_name)
+
+
+def test_read_all_users_response_has_expected_schema():
+    """
+    Test to validate the People API response with schema
+    """
+    users = client.read_all_users().as_dict
+    validator = Validator(schema, required_all=True)
+
+    with soft_assertions():
+        for user in users:
+            is_valid = validator.validate(user)
+            assert_that(is_valid, description=validator.errors).is_true()
