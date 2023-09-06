@@ -1,9 +1,16 @@
 from json import dumps
 
-from api_clinet.base_api_client import BaseApiClient
+from clients.rest_api_clinet.base_api_client import BaseApiClient
 from config import BASE_URI
 from tests.helpers.people_api_helpers import generate_unique_name
 from utils.request import APIRequest
+
+schema = {
+    "fname": {'type': 'string'},
+    "lname": {'type': 'string'},
+    "person_id": {'type': 'number'},
+    "timestamp": {'type': 'string'}
+}
 
 
 class PeopleApiClient(BaseApiClient):
