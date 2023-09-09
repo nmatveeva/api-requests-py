@@ -1,5 +1,5 @@
 # api-requests-py
-REST API test automation solution using Python.
+SOAP and REST API test automation solution using Python.
 
 ## Project Setup
 
